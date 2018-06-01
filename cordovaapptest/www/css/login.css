@@ -1,0 +1,96 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    /*position: fixed;*/
+}
+
+div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+img {
+    border: 0;
+    vertical-align: middle;
+}
+
+ol, ul, li {
+    list-style: none;
+}
+
+li {
+    vertical-align: middle;
+}
+
+.whole {
+    height: 100%;
+    width: 100%;
+    /*background-image: url(../images/login-background.jpg);*/
+    padding-top: 180px;
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    overflow:hidden;
+}
+
+.tit {
+    width: 100%;
+    background-image: url(../images/logo.png);
+    background-repeat: no-repeat;
+    margin: 0 auto;
+    padding-top: 100px;
+}
+
+.box {
+    height: 100%;
+    width: 30%;
+    margin: 0 auto;
+    overflow: hidden;
+    background-color:#ffffff;
+}
+
+.biaoti {
+    width: 100%;
+    color: #000000;
+    font-family: "Î¢ÈíÑÅºÚ";
+    font-size: 40px;
+    margin: 0 auto;
+    margin-top: 48px;
+    text-align:center;
+}
+
+.loginlist {
+    color: #000000;
+    font-family: "Î¢ÈíÑÅºÚ";
+    font-size: 24px;
+    font-weight: 200;
+    margin: 0 auto;
+    margin-top: 48px;
+}
+
+    .loginlist li {
+        width: 100%;
+        margin: 0 auto;
+        margin-top: 10px;
+        display: block;
+        text-align: center;
+    }
+
+        .loginlist li span {
+            flow: left;
+        }
+
+        .loginlist li input {
+            flow: right;
+        }
