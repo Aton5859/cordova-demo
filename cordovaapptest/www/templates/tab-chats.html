@@ -1,12 +1,14 @@
+Ôªø<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <ion-view view-title="Chats">
     <ion-content>
+        <ion-refresher pulling-text="‰∏ãÊãâÂà∑Êñ∞" on-refresh="doRefresh()"></ion-refresher>
         <ion-list>
-            <!--÷ÿ–¬…Ë÷√¬∑”…-->
             <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/app/tab/chats/{{chat.id}}">
-                <img ng-src="{{chat.face}}">
+                <!--<img ng-src="{{chat.face}}">-->
                 <h2>{{chat.name}}</h2>
                 <p>{{chat.lastText}}</p>
-                <i class="icon ion-chevron-right icon-accessory"></i>
+                <!--ÂàóË°®Ë°åÂêé‰æß>Á¨¶Âè∑
+                <i class="icon ion-chevron-right icon-accessory"></i>-->
                 <ion-option-button class="button-assertive" ng-click="remove(chat)">
                     Delete
                 </ion-option-button>
