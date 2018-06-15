@@ -13,11 +13,11 @@
         document.addEventListener( 'resume', onResume.bind( this ), false );
         
         // TODO: Cordova 已加载。在此处执行任何需要 Cordova 的初始化。
-        var parentElement = document.getElementById('deviceready');
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+        //var parentElement = document.getElementById('deviceready');
+        //var listeningElement = parentElement.querySelector('.listening');
+        //var receivedElement = parentElement.querySelector('.received');
+        //listeningElement.setAttribute('style', 'display:none;');
+        //receivedElement.setAttribute('style', 'display:block;');
     };
 
     function onPause() {

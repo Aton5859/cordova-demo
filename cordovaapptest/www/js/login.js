@@ -37,29 +37,55 @@
 
     document.getElementById("btnLogin").addEventListener("click", login);
     function login() {
-        //var username = document.getElementById("iptUserName");
-        //var password = document.getElementById("iptPassword");
-        //var salt = 'avatech';
-        //alert(hex_hmac_md5(password.value, salt));
-        //$.ajax({
-        //    url: "http://192.168.3.14:8080/StockManage/rest/LoginService/getNamebySelect",
-        //    type: "get",
-        //    data: "EncAccount=" + username + "&EncPassword=" + hex_hmac_md5(password.value, salt),
-        //    dataType: "text",
-        //    success: function (result) {
-        //        //获取接口返回的数据
-        //        if (!result) {
-        //            alert("用户名或密码错误");
-        //            // return;
-        //        }
-        //        alert("登录成功");
-        //        window.location.href = "main.html"
-        //    },
-        //    error: function (e) {
-        //        window.alert(e.status);
-        //        window.location.href = "main.html"
-        //    }
-        //})
-        window.location.href = "index.html"
+        var username = document.getElementById("iptUserName");
+        var password = document.getElementById("iptPassword");
+        var salt = 'avatech';
+        $.ajax({
+            url: "http://192.168.3.14:8080/edi.initialfantasy_Web/v1/userauthrization",
+            type: "get",
+            data: {
+                "companyName": "北京奥维奥科技有限公司",
+                "userName": username.value,
+                "password": hex_hmac_md5(salt, password.value),
+            },
+            dataType: "jsonp",
+            success: function (result) {
+                //获取接口返回的数据
+                if (result.code == 0) {
+                    alert("登录成功");
+                    window.location.href = "index.html";
+                   // getTask(result.data[0].token);
+                } else {
+                    alert("用户名或密码错误");
+                }
+            },
+            error: function (XMLHttpRequest) {
+                alert("服务器连接失败");
+                //alert(XMLHttpRequest.status);
+                //alert(XMLHttpRequest.readyState);
+               // window.location.href = "index.html"
+            },
+        })
+    }
+    function getTask(token) {
+        $.ajax({
+            url: "http://192.168.3.14:8080/edi.stocktask_Web/v1/stocktasks",
+            type: "get",
+            data: {
+                "token": token
+            },
+            dataType: "jsonp",
+            success: function (result) {
+                //获取接口返回的数据
+                if (result.code == 0) {
+                    return result;
+                } else {
+                    alert(result);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("任务清单获取失败");
+            },
+        })
     }
 })();
