@@ -7,15 +7,8 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <ion-view view-title="{{chat.annotated}}" hide-tabs>
     <ion-content>
-        <section class="order-detail-header">
-            <ion-row>
-                <ion-col width-33><ion-icon name="paper"></ion-icon></ion-col>
-                <ion-col width-67>
-                    <h4>任务类型：<span>{{chat.annotated}}</span></h4>
-                    <p>单据编号：{{chat.objectKey}}</p>
-                </ion-col>
-            </ion-row>
-        </section>
+        <h4>任务类型：<span>{{chat.annotated}}</span></h4>
+        <p>单据编号：{{chat.objectKey}}</p>
         <table style="text-align:left">
             <tr>
                 <th>itemCode</th>
@@ -26,10 +19,10 @@
                 <th>{{ item.currency }}</th>
             </tr>
         </table>
-        <ion-footer-bar>
-            <button class="button pull-right" ng-click="createStockReport(chat)">
-                汇报
-            </button>
-        </ion-footer-bar>
     </ion-content>
+    <ion-footer-bar>
+        <button class="button pull-right" ng-click="createStockReport(chat)">
+            汇报
+        </button>
+    </ion-footer-bar>
 </ion-view>
