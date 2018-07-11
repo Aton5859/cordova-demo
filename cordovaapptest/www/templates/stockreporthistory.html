@@ -1,0 +1,11 @@
+﻿<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<ion-view view-title="库存汇报历史" hide-tabs>
+    <ion-content>
+        <ion-list>
+            <ion-item ng-repeat="report in reports" type="item-text-wrap" href="#/app/tab/stockreporthistory/{{report.docEntry}}">
+                <h2>{{report.remarks}}</h2>
+                <p>{{report.docEntry}}</p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

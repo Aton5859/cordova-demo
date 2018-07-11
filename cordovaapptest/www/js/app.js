@@ -16,6 +16,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             }
         });
     })
+    // 对页面进行tab的隐藏/显示设置
+    .directive('showTabs', function ($rootScope) {
+        return {
+            restrict: 'A',
+            link: function ($scope, $el) {
+                $rootScope.hideTabs = false;
+            }
+        };
+    })
+    .directive('hideTabs', function ($rootScope) {
+        return {
+            restrict: 'A',
+            link: function ($scope, $el) {
+                $rootScope.hideTabs = true;
+            }
+        };
+    })
     .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
         //用来配置各个平台导航条样式（统一导航条位置）
         $ionicConfigProvider.platform.ios.tabs.style('standard');
@@ -99,20 +116,30 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                 }
             })
             .state('app.tab.chats', {
-                url: '/chats',
+                url: '/dash',
                 views: {
-                    'tab-chats': {
+                    'tab-dash': {
                         templateUrl: 'templates/tab-chats.html',
                         controller: 'ChatsCtrl'
                     }
                 }
             })
             .state('app.tab.chat-detail', {
-                url: '/chats/:chatId',
+                url: '/dash/:objectKey',
                 views: {
-                    'tab-chats': {
+                    'tab-dash': {
                         templateUrl: 'templates/chat-detail.html',
                         controller: 'ChatDetailCtrl'
+                    }
+                }
+            })
+            .state('app.tab.stockreport', {
+                url: '/stockreport',
+                params: { 'stocktask': null },
+                views: {
+                    'tab-dash': {
+                        templateUrl: 'templates/stockreport.html',
+                        controller: 'StockReportCtrl'
                     }
                 }
             })
@@ -125,15 +152,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                     }
                 }
             })
-            .state('app.tab.accounts', {
-                url: '/accounts',
+            .state('app.tab.stockreporthistory', {
+                url: '/stockreporthistory',
                 views: {
-                    'tab-account': {
-                        templateUrl: 'templates/tab-accounts.html',
-                        controller: 'actionsheetCtl'
+                    'tab-dash': {
+                        templateUrl: 'templates/stockreporthistory.html',
+                        controller: 'StockReportHistoryCtrl'
                     }
                 }
-            });
+            })
+            .state('app.tab.stockreporthistorydetail', {
+                url: '/stockreporthistory/:docEntry',
+                views: {
+                    'tab-dash': {
+                        templateUrl: 'templates/stockreporthistorydetail.html',
+                        controller: 'StockReportHistoryDetailCtrl'
+                    }
+                }
+            })
         //tab页的初始页面
         $urlRouterProvider.otherwise('/app/tab/home');
     });

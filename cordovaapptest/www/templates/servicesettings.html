@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="../lib/ionic/css/ionic.css">
+    <title>高级设置</title>
+</head>
+<body>
+    <div class="list">
+        <label class="item item-input">
+            <span class="input-label">帐套名称</span>
+            <input type="text" ng-model="loginData.username" id="chooseUserDatabase" placeholder="自定义帐套名称">
+        </label>
+        <label class="item item-input">
+            <span class="input-label">帐套地址</span>
+            <input type="text" ng-model="loginData.username" id="iptUserName" value="例如：XXXXXXXXXXX">
+        </label>
+        <label class="item">
+            <button class="button button-block button-positive" type="submit" id="btnLogin">保存</button>
+        </label>
+    </div>
+    <script type="text/javascript" src="../js/platformOverrides.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+</body>
+</html>
