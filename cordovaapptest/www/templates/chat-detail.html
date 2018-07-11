@@ -5,20 +5,60 @@
   The Friends service returns an array of friend data
 -->
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<style>
+.col{
+  background-color: #F9FAFB;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+</style>
 <ion-view view-title="{{chat.annotated}}" hide-tabs>
     <ion-content>
-        <h4>任务类型：<span>{{chat.annotated}}</span></h4>
-        <p>单据编号：{{chat.objectKey}}</p>
-        <table style="text-align:left">
-            <tr>
-                <th>itemCode</th>
-                <th>currency</th>
-            </tr>
-            <tr ng-repeat="item in chat.stockTaskItems">
-                <th>{{ item.itemCode }}</th>
-                <th>{{ item.currency }}</th>
-            </tr>
-        </table>
+        <div class="row">
+            <div class="col">任务类型：</div>
+            <div class="col">{{chat.annotated}}</div>
+        </div>
+        <div class="row">
+            <div class="col">单据编号：</div>
+            <div class="col">{{chat.objectKey}}</div>
+        </div>
+        <div class="row">
+            <div class="col">业务伙伴名称：</div>
+            <div class="col">{{chat.businessPartnerName}}</div>
+        </div>
+        <div class="row">
+            <div class="col">方案编码：</div>
+            <div class="col">{{chat.schemaCode}}</div>
+        </div>
+        <div class="row">
+            <div class="col">过账日期</div>
+            <div class="col">{{chat.documentDate}}</div>
+        </div>
+
+        <div class="row">
+            <div class="col">物料编号</div>
+            <div class="col">物料名称</div>
+            <div class="col">价格</div>
+            <div class="col">汇率</div>
+            <div class="col">币种</div>
+            <div class="col">数量</div>
+            <div class="col">扫描类型</div>
+
+        </div>
+        <div class="row" ng-repeat="item in chat.stockTaskItems">
+            <div class="col">{{item.itemCode}}</div>
+            <div class="col">{{item.itemDescription}}</div>
+            <div class="col">{{item.price}}</div>
+            <div class="col">{{item.currencyRate}}</div>
+            <div class="col">{{item.currency}}</div>
+            <div class="col">{{item.quantity}}</div>
+            <div class="col">{{item.scanningType}}</div>
+        </div>
+
+        <div class="row">
+            <div class="col">备注：</div>
+            <div class="col">{{chat.remark}}</div>
+        </div>
     </ion-content>
     <ion-footer-bar>
         <button class="button pull-right" ng-click="createStockReport(chat)">
