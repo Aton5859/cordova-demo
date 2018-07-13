@@ -1,6 +1,13 @@
 ﻿<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <ion-view view-title="消息" hide-tabs>
     <ion-content>
+        <ion-header-bar class="item-input-inset">
+            <label class="item-input-wrapper">
+                <i class="icon ion-ios-search placeholder-icon"></i>
+                <input type="search" placeholder="支持单据编号模糊查询" ng-model="searchContent">
+            </label>
+            <button class="button button-clear ion-ios-close-empty"></button>
+        </ion-header-bar>
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
         <ion-list>
             <!--如需在左侧加图片显示则加上：class="item-remove-animate item-avatar item-icon-right"-->

@@ -1,38 +1,55 @@
 ﻿<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<style>
+    .col {
+        background-color: #F9FAFB;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+</style>
 <ion-view view-title="库存汇报明细" hide-tabs>
     <ion-content>
-        <section class="order-detail-header">
-            <ion-row>
-                <ion-col width-33><ion-icon name="paper"></ion-icon></ion-col>
-                <ion-col width-67>
-                    <h4><span>{{report.remarks}}</span></h4>
-                    <p>单据编号：{{report.docEntry}}</p>
-                </ion-col>
-            </ion-row>
-        </section>
-        <div>
-            <table style="text-align:left">
-                <tr>
-                    <th>barCode1</th>
-                    <th>price</th>
-                    <th>fromLocation</th>
-                    <th>fromWarehose</th>
-                </tr>
-                <tr ng-repeat="item in report.stockReportItems">
-                    <td>
-                        <p>{{item.barCode1}}</p>
-                    </td>
-                    <td>
-                        <p>{{item.price}}</p>
-                    </td>
-                    <td>
-                        <p>{{item.fromLocation}}</p>
-                    </td>
-                    <td>
-                        <p>{{item.fromWarehose}}</p>
-                    </td>
-                </tr>
-            </table>
+        <div class="row">
+            <div class="col">B1单据编号：</div>
+            <div class="col">{{report.b1DocEntry}}</div>
+        </div>
+        <div class="row">
+            <div class="col">业务伙伴名称：</div>
+            <div class="col">{{report.businessPartnerName}}</div>
+        </div>
+        <div class="row">
+            <div class="col">基础单据类型：</div>
+            <div class="col">{{report.baseDocumentType}}</div>
+        </div>
+        <div class="row">
+            <div class="col">基础单据编号：</div>
+            <div class="col">{{report.baseDocumentEntry}}</div>
+        </div>
+        <div class="row">
+            <div class="col">汇报时间：</div>
+            <div class="col">{{report.createDate}}</div>
+        </div>
+
+        <div class="row">
+            <div class="col">基础单据行号</div>
+            <div class="col">物料编号</div>
+            <div class="col">物料名称</div>
+            <div class="col">数量</div>
+            <div class="col">参考1</div>
+            <div class="col">参考2</div>
+
+        </div>
+        <div class="row" ng-repeat="item in report.stockReportItems">
+            <div class="col">{{item.baseDocumentLineId}}</div>
+            <div class="col">{{item.itemCode}}</div>
+            <div class="col">{{item.itemDescription}}</div>
+            <div class="col">{{item.quantity}}</div>
+            <div class="col">{{item.reference1}}</div>
+            <div class="col">{{item.reference2}}</div>
+        </div>
+
+        <div class="row">
+            <div class="col">备注：</div>
+            <div class="col">{{chat.remark}}</div>
         </div>
     </ion-content>
 </ion-view>
