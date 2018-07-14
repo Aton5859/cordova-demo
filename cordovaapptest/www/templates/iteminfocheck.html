@@ -1,0 +1,25 @@
+﻿<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<ion-modal-view view-title="物料信息">
+    <ion-content>
+        <div class="row">
+            <div class="col">物料编号：</div>
+            <div class="col">{{itemCode}}</div>
+        </div>
+        <div class="row">
+            <div class="col">物料名称：</div>
+            <div class="col">{{itemDescription}}</div>
+        </div>
+        <div class="row">
+            <div class="col">数量：</div>
+            <div class="col">{{quantity}}</div>
+        </div>
+    </ion-content>
+    <ion-footer-bar>
+        <button class="button pull-left button-positive" ng-click="">
+            重新扫描
+        </button>
+        <button class="button pull-right button-positive" ng-click="saveItemInfo()">
+            确定
+        </button>
+    </ion-footer-bar>
+</ion-modal-view>

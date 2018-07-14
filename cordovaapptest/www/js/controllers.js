@@ -12,7 +12,6 @@ angular.module('starter.controllers', [])
         $scope.closeLogin = function () {
             $scope.modal.hide();
         };
-
         $scope.login = function () {
             $scope.modal.show();
         };
@@ -56,7 +55,7 @@ angular.module('starter.controllers', [])
             $state.go('app.tab.chats', {});
         }
         $scope.reporthistory = function () {
-            $state.go('app.tab.stockreporthistory',{});
+            $state.go('app.tab.stockreporthistory', {});
         }
         // 显示tabs
         $scope.$on('$ionicView.enter', function () {
@@ -83,6 +82,7 @@ angular.module('starter.controllers', [])
             .finally(function () {
                 $scope.$broadcast('scroll.refreshComplete');
             });
+        //列表刷新事件
         $scope.doRefresh = function () {
             $scope.chats = $http(
                 {
@@ -102,8 +102,39 @@ angular.module('starter.controllers', [])
                 })
                 .finally(function () {
                     $scope.$broadcast('scroll.refreshComplete');
-                });
+                })
         };
+        //搜索事件
+        $scope.search = function () {
+            var data = { "name": this.searchContent };
+            var obj = [];
+            if ($window.localStorage.searchHistory == "") {
+                $window.localStorage.setItem("searchHistory", data);
+            } else {
+
+            }
+        };
+        //搜索历史框的显示与隐藏，默认隐藏，点击搜索框触发显示事件
+        $scope.searchHistory = false;
+        $scope.showSearch = function (i) {
+            $scope.searchHistory = true;
+        };
+        $scope.hideSearch = function (i) {
+            $scope.searchHistory = false;
+        };
+        //删除搜索框输入内容
+        $scope.delSearchContent = function () {
+            this.searchContent = "";
+        };
+        //删除搜索历史
+        $scope.delSearchHistory = function () {
+           $window.localStorage.searchHistory = "";
+        }
+        //点击搜索历史item，对item进行搜索
+        $scope.historyName = function (event) {
+            //$scope.searchName = event.target.innerHTML;
+            //$scope.search();
+        }
     })
     .controller('ChatDetailCtrl', function ($scope, $stateParams, Chats, $http, $state, $ionicTabsDelegate) {
         $scope.chat = Chats.get($stateParams, $scope);
@@ -115,7 +146,9 @@ angular.module('starter.controllers', [])
             $ionicTabsDelegate.showBar(false);
         });
     })
-    .controller('StockReportCtrl', function ($scope, $state, $stateParams, $http, $window) {
+    .controller('StockReportCtrl', function ($scope, $state, $stateParams, $http, $window, $ionicModal) {
+        $scope.task = $scope.$$prevSibling.chat;
+
         var json = [];
         var j = {};
         //表头赋值
@@ -234,6 +267,26 @@ angular.module('starter.controllers', [])
                 .error(function (error) {
                     alert("服务器连接失败");
                 })
+        };
+        $ionicModal.fromTemplateUrl('templates/iteminfocheck.html', {
+            scope: $scope
+        }).then(function (modal) {
+            $scope.modalCheck = modal;
+        });
+        $ionicModal.fromTemplateUrl('templates/iteminfoedit.html', {
+            scope: $scope
+        }).then(function (modal) {
+            $scope.modalEdit = modal;
+        });
+        $scope.saveItemInfo = function () {
+            $scope.modalEdit.hide();
+            $scope.modalCheck.hide();
+        }
+        $scope.edit = function () {
+            $scope.modalEdit.show();
+        }
+        $scope.scan = function () {
+            $scope.modalCheck.show();
         }
     })
     .controller('AccountCtrl', function ($scope) {
