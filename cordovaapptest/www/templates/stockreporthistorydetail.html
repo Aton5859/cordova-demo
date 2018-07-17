@@ -1,11 +1,4 @@
 ﻿<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<style>
-    .col {
-        background-color: #F9FAFB;
-        border: 1px solid #ddd;
-        text-align: center;
-    }
-</style>
 <ion-view view-title="库存汇报明细" hide-tabs>
     <ion-content>
         <div class="row">
@@ -28,24 +21,38 @@
             <div class="col">汇报时间：</div>
             <div class="col">{{report.createDate}}</div>
         </div>
+        <ion-list>
+            <ion-item ng-repeat="item in report.stockReportItems" type="item-text-wrap" class="item item-icon-right">
+                <p ng-click="isShowLineDetail=!isShowLineDetail">
+                    {{item.itemCode}}
 
-        <div class="row">
-            <div class="col">基础单据行号</div>
-            <div class="col">物料编号</div>
-            <div class="col">物料名称</div>
-            <div class="col">数量</div>
-            <div class="col">参考1</div>
-            <div class="col">参考2</div>
-
-        </div>
-        <div class="row" ng-repeat="item in report.stockReportItems">
-            <div class="col">{{item.baseDocumentLineId}}</div>
-            <div class="col">{{item.itemCode}}</div>
-            <div class="col">{{item.itemDescription}}</div>
-            <div class="col">{{item.quantity}}</div>
-            <div class="col">{{item.reference1}}</div>
-            <div class="col">{{item.reference2}}</div>
-        </div>
+                </p>
+                <i class="icon ion-ios-arrow-up" ng-show="isShowLineDetail"></i>
+                <i class="icon ion-ios-arrow-forward" ng-show="!isShowLineDetail"></i>
+                <div ng-show="isShowLineDetail">
+                    <div class="row">
+                        <div class="col">基础单据行号</div>
+                        <div class="col">{{item.baseDocumentLineId}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">物料名称</div>
+                        <div class="col">{{item.itemDescription}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">数量</div>
+                        <div class="col">{{item.quantity}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">参考1</div>
+                        <div class="col">{{item.reference1}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">参考2</div>
+                        <div class="col">{{item.reference2}}</div>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
 
         <div class="row">
             <div class="col">备注：</div>

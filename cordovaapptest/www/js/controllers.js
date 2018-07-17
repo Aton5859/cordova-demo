@@ -147,14 +147,9 @@ angular.module('starter.controllers', [])
             $scope.searchHistoryContent = JSON.parse($window.localStorage.getItem("searchHistory"));
         }
 
-        //搜索历史框的显示与隐藏，默认隐藏，点击搜索框触发显示事件
-        $scope.searchHistory = false;
-        $scope.showSearch = function (i) {
-            $scope.searchHistory = true;
-        };
-        $scope.hideSearch = function (i) {
-            $scope.searchHistory = false;
-        };
+        //搜索历史框的显示与隐藏在前端实现：ng-focus="searchHistory='true'" ng-blur="searchHistory='false'"
+        //默认隐藏
+        $scope.isShowSearchHistory = false;
 
         //删除搜索框输入内容
         $scope.delSearchContent = function () {
@@ -368,4 +363,6 @@ angular.module('starter.controllers', [])
             //关闭tab选项卡      
             $ionicTabsDelegate.showBar(false);
         });
+        //行明细默认隐藏
+        $scope.isShowLineDetail = false;
     })

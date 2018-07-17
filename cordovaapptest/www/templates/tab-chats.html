@@ -5,12 +5,12 @@
             <label class="item-input-wrapper">
                 <!--因删除搜索框用户输入内容功能有bug，所以暂时隐藏-->
                 <!--<button class="button button-clear ion-ios-close-empty" ng-click="delSearchContent()"></button>-->
-                <input type="search" placeholder="支持单据编号模糊查询" ng-model="searchContent" ng-focus="showSearch(i)" ng-blur="hideSearch(i)">
+                <input type="search" placeholder="支持单据编号模糊查询" ng-model="searchContent" ng-focus="isShowSearchHistory='true'" ng-blur="isShowSearchHistory=!isShowSearchHistory">
             </label>
             <button class="icon ion-ios-search placeholder-icon button-clear" ng-click="search()"></button>
         </ion-header-bar>
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
-        <div ng-show="searchHistory" class="search-history-wrap">
+        <div ng-show="isShowSearchHistory" class="search-history-wrap">
             <p><i class="icon ion-ios-clock-outline"></i>搜索历史</p>
             <ul class="search-history-list">
                 <li ng-repeat="item in searchHistoryContent" on-tap="historyName(item.key)" class=" button button-clear">{{item.key}}</li>
