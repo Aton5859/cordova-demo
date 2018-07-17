@@ -63,6 +63,7 @@ angular.module('starter.controllers', [])
         })
     })
     .controller('ChatsCtrl', function ($scope, Chats, $http, $window, $ionicTabsDelegate) {
+        //库存任务列表数据获取
         $scope.chats = $http(
             {
                 method: "jsonp",
@@ -82,6 +83,7 @@ angular.module('starter.controllers', [])
             .finally(function () {
                 $scope.$broadcast('scroll.refreshComplete');
             });
+
         //列表刷新事件
         $scope.doRefresh = function () {
             $scope.chats = $http(
@@ -104,16 +106,47 @@ angular.module('starter.controllers', [])
                     $scope.$broadcast('scroll.refreshComplete');
                 })
         };
+
         //搜索事件
         $scope.search = function () {
-            var data = { "name": this.searchContent };
-            var obj = [];
-            if ($window.localStorage.searchHistory == "") {
-                $window.localStorage.setItem("searchHistory", data);
+            var data = [{ "key": this.searchContent }];
+            //搜索历史为空
+            if ($window.localStorage.searchHistory == "" || $window.localStorage.length == 0) {
+                $window.localStorage.setItem("searchHistory", JSON.stringify(data));
+                $scope.searchHistoryContent = JSON.parse($window.localStorage.getItem("searchHistory"));
             } else {
-
+                //搜索历史不为空则插入新元素
+                var obj = JSON.parse($window.localStorage.getItem("searchHistory"));
+                //限定只存最近8个历史记录，超出则删除相比最早的搜索历史、搜索了之前搜过的放到最新
+                if (obj.length == 8) {
+                    obj.splice(7, 1);
+                    $window.localStorage.setItem("searchHistory", JSON.stringify(obj));
+                    // obj = JSON.parse($window.localStorage.getItem("searchHistory"));
+                }
+                //不重复向搜索历史中插入相同数据
+                for (let i = 0; i < obj.length; i++) {
+                    //搜索内容存在于搜索历史，则将其置于历史记录最新
+                    if (obj[i].key == this.searchContent) {
+                        obj.splice(i, 1);
+                        obj.unshift({ "key": event });
+                        $window.localStorage.setItem("searchHistory", JSON.stringify(obj));
+                        break;
+                    }
+                    if (i == obj.length - 1 && obj[i].key != this.searchContent) {
+                        //最新搜索置于最前
+                        obj.unshift({ "key": this.searchContent });
+                        $window.localStorage.setItem("searchHistory", JSON.stringify(obj));
+                        $scope.searchHistoryContent = obj;
+                        break;
+                    }
+                }
             }
         };
+        //绑定页面搜索历史值
+        if ($window.localStorage.getItem("searchHistory") != "") {
+            $scope.searchHistoryContent = JSON.parse($window.localStorage.getItem("searchHistory"));
+        }
+
         //搜索历史框的显示与隐藏，默认隐藏，点击搜索框触发显示事件
         $scope.searchHistory = false;
         $scope.showSearch = function (i) {
@@ -122,18 +155,30 @@ angular.module('starter.controllers', [])
         $scope.hideSearch = function (i) {
             $scope.searchHistory = false;
         };
+
         //删除搜索框输入内容
         $scope.delSearchContent = function () {
             this.searchContent = "";
         };
+
         //删除搜索历史
         $scope.delSearchHistory = function () {
-           $window.localStorage.searchHistory = "";
+            $window.localStorage.searchHistory = "";
+            $scope.searchHistoryContent = null;
         }
+
         //点击搜索历史item，对item进行搜索
         $scope.historyName = function (event) {
-            //$scope.searchName = event.target.innerHTML;
-            //$scope.search();
+            var obj = JSON.parse($window.localStorage.getItem("searchHistory"));
+            for (let i = 0; i < obj.length; i++) {
+                if (obj[i].key == event) {
+                    obj.splice(i, 1);
+                    obj.unshift({ "key": event });
+                    $window.localStorage.setItem("searchHistory", JSON.stringify(obj));
+                    $scope.searchHistoryContent = obj;
+                    break;
+                }
+            }
         }
     })
     .controller('ChatDetailCtrl', function ($scope, $stateParams, Chats, $http, $state, $ionicTabsDelegate) {
