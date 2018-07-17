@@ -25,10 +25,9 @@
             <ion-item ng-repeat="item in report.stockReportItems" type="item-text-wrap" class="item item-icon-right">
                 <p ng-click="isShowLineDetail=!isShowLineDetail">
                     {{item.itemCode}}
-
+                    <i class="icon ion-ios-arrow-up" ng-show="isShowLineDetail"></i>
+                    <i class="icon ion-ios-arrow-forward" ng-show="!isShowLineDetail"></i>
                 </p>
-                <i class="icon ion-ios-arrow-up" ng-show="isShowLineDetail"></i>
-                <i class="icon ion-ios-arrow-forward" ng-show="!isShowLineDetail"></i>
                 <div ng-show="isShowLineDetail">
                     <div class="row">
                         <div class="col">基础单据行号</div>

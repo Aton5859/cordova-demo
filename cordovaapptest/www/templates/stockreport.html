@@ -14,7 +14,6 @@
             <div class="col">币种</div>
             <div class="col">数量</div>
             <div class="col">扫描类型</div>
-
         </div>
         <div class="row" ng-repeat="item in task.stockTaskItems">
             <div class="col">{{item.itemCode}}</div>
@@ -31,7 +30,6 @@
             <div class="col">物料编号</div>
             <div class="col">物料名称</div>
             <div class="col">数量</div>
-            <div class="col">扫描类型</div>
             <div class="col">参考1</div>
             <div class="col">参考2</div>
 
@@ -42,6 +40,9 @@
             <div class="col">{{item.quantity}}</div>
             <div class="col">{{item.reference1}}</div>
             <div class="col">{{item.reference2}}</div>
+            <ion-option-button class="button-assertive" ng-click="remove(chat)">
+                Delete
+            </ion-option-button>
         </div>
     </ion-content>
     <ion-footer-bar>
