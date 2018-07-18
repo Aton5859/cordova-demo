@@ -187,14 +187,19 @@ angular.module('starter.controllers', [])
         }
     })
     .controller('ChatDetailCtrl', function ($scope, $stateParams, Chats, $http, $state, $ionicTabsDelegate) {
+        //绑定页面数据
         $scope.chat = Chats.get($stateParams, $scope);
+        //新建库存汇报
         $scope.createStockReport = function () {
             $state.go('app.tab.stockreport', { stocktask: $stateParams });
         }
+        //进入该页面事件
         $scope.$on('$ionicView.beforeEnter', function () {
             //关闭tab选项卡      
             $ionicTabsDelegate.showBar(false);
         });
+        //行明细默认不展开
+        $scope.isShowLineDetail = false;
     })
     .controller('StockReportCtrl', function ($scope, $state, $stateParams, $http, $window, $ionicModal) {
         $scope.task = $scope.$$prevSibling.chat;

@@ -7,6 +7,7 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <ion-view view-title="{{chat.annotated}}" hide-tabs>
     <ion-content>
+
         <div class="row">
             <div class="col">任务类型：</div>
             <div class="col">{{chat.annotated}}</div>
@@ -24,29 +25,40 @@
             <div class="col">{{chat.schemaCode}}</div>
         </div>
         <div class="row">
-            <div class="col">过账日期</div>
+            <div class="col">过账日期：</div>
             <div class="col">{{chat.documentDate}}</div>
         </div>
-
-        <div class="row">
-            <div class="col col-20">物料编号</div>
-            <div class="col col-20">物料名称</div>
-            <div class="col">价格</div>
-            <div class="col">汇率</div>
-            <div class="col">币种</div>
-            <div class="col">数量</div>
-            <div class="col">扫描类型</div>
-
-        </div>
-        <div class="row" ng-repeat="item in chat.stockTaskItems">
-            <div class="col col-20">{{item.itemCode}}</div>
-            <div class="col col-20">{{item.itemDescription}}</div>
-            <div class="col">{{item.price}}</div>
-            <div class="col">{{item.currencyRate}}</div>
-            <div class="col">{{item.currency}}</div>
-            <div class="col">{{item.quantity}}</div>
-            <div class="col">{{item.scanningType}}</div>
-        </div>
+        <ion-list>
+            <ion-item ng-repeat="item in chat.stockTaskItems" type="item-text-wrap" class="item item-icon-right">
+                <p ng-click="isShowLineDetail=!isShowLineDetail">
+                    {{item.itemDescription}}
+                    <i class="icon ion-ios-arrow-up" ng-show="isShowLineDetail"></i>
+                    <i class="icon ion-ios-arrow-forward" ng-show="!isShowLineDetail"></i>
+                </p>
+                <div ng-show="isShowLineDetail">
+                    <div class="row">
+                        <div class="col">物料名称</div>
+                        <div class="col">{{item.itemDescription}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">价格</div>
+                        <div class="col">{{item.price}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">数量</div>
+                        <div class="col">{{item.quantity}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">参考1</div>
+                        <div class="col">{{item.reference1}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">参考2</div>
+                        <div class="col">{{item.reference2}}</div>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
 
         <div class="row">
             <div class="col">备注：</div>
