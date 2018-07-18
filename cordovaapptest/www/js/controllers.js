@@ -114,16 +114,15 @@ angular.module('starter.controllers', [])
             //搜索历史为空
             try {
                 if ($window.localStorage.length == 0) {
-                    $window.localStorage.setItem("searchHistory", JSON.stringify(data));
-                    $scope.searchHistoryContent = JSON.parse($window.localStorage.getItem("searchHistory"));
-                } else if ($window.localStorage.searchHistory != "" && $window.localStorage.searchHistory != undefined) {
+                    $window.localStorage.setItem("stockTasksSearchHistory", JSON.stringify(data));
+                    $scope.searchHistoryContent = JSON.parse($window.localStorage.getItem("stockTasksSearchHistory"));
+                } else if ($window.localStorage.stockTasksSearchHistory != "" && $window.localStorage.stockTasksSearchHistory != undefined) {
                     //搜索历史不为空则插入新元素
-                    var obj = JSON.parse($window.localStorage.getItem("searchHistory"));
+                    var obj = JSON.parse($window.localStorage.getItem("stockTasksSearchHistory"));
                     //限定只存最近8个历史记录，超出则删除相比最早的搜索历史、搜索了之前搜过的放到最新
                     if (obj.length == 8) {
                         obj.splice(7, 1);
-                        $window.localStorage.setItem("searchHistory", JSON.stringify(obj));
-                        // obj = JSON.parse($window.localStorage.getItem("searchHistory"));
+                        $window.localStorage.setItem("stockTasksSearchHistory", JSON.stringify(obj));
                     };
                     //不重复向搜索历史中插入相同数据
                     for (var i = 0; i < obj.length; i++) {
@@ -131,32 +130,32 @@ angular.module('starter.controllers', [])
                         if (obj[i].key == this.searchContent) {
                             obj.splice(i, 1);
                             obj.unshift({ "key": event });
-                            $window.localStorage.setItem("searchHistory", JSON.stringify(obj));
+                            $window.localStorage.setItem("stockTasksSearchHistory", JSON.stringify(obj));
                             break;
                         }
                         if (i == obj.length - 1 && obj[i].key != this.searchContent) {
                             //最新搜索置于最前
                             obj.unshift({ "key": this.searchContent });
-                            $window.localStorage.setItem("searchHistory", JSON.stringify(obj));
+                            $window.localStorage.setItem("stockTasksSearchHistory", JSON.stringify(obj));
                             $scope.searchHistoryContent = obj;
                             break;
                         }
                     }
                 } else {
-                    $window.localStorage.setItem("searchHistory", JSON.stringify(data));
-                    $scope.searchHistoryContent = JSON.parse($window.localStorage.getItem("searchHistory"));
+                    $window.localStorage.setItem("stockTasksSearchHistory", JSON.stringify(data));
+                    $scope.searchHistoryContent = JSON.parse($window.localStorage.getItem("stockTasksSearchHistory"));
                 }
             } catch (err) {
                 alert(err);
             }
         };
         //绑定页面搜索历史值
-        if ($window.localStorage.getItem("searchHistory") != "" && $window.localStorage.searchHistory != undefined) {
-            $scope.searchHistoryContent = JSON.parse($window.localStorage.getItem("searchHistory"));
+        if ($window.localStorage.getItem("stockTasksSearchHistory") != "" && $window.localStorage.stockTasksSearchHistory != undefined) {
+            $scope.searchHistoryContent = JSON.parse($window.localStorage.getItem("stockTasksSearchHistory"));
         } else {
             $scope.searchHistoryContent = "";
         }
-        //搜索历史框的显示与隐藏在前端实现：ng-focus="searchHistory='true'" ng-blur="searchHistory='false'"
+        //搜索历史框的显示与隐藏在前端实现： ng-focus="isShowSearchHistory='true'" ng-blur="isShowSearchHistory=!isShowSearchHistory"
         //默认隐藏
         $scope.isShowSearchHistory = false;
         //删除搜索框输入内容
@@ -165,18 +164,18 @@ angular.module('starter.controllers', [])
         };
         //删除搜索历史
         $scope.delSearchHistory = function () {
-            $window.localStorage.searchHistory = "";
+            $window.localStorage.stockTasksSearchHistory = "";
             $scope.searchHistoryContent = null;
         }
         //点击搜索历史item，对item进行搜索
         $scope.historyName = function (event) {
             try {
-                var obj = JSON.parse($window.localStorage.getItem("searchHistory"));
+                var obj = JSON.parse($window.localStorage.getItem("stockTasksSearchHistory"));
                 for (var i = 0; i < obj.length; i++) {
                     if (obj[i].key == event) {
                         obj.splice(i, 1);
                         obj.unshift({ "key": event });
-                        $window.localStorage.setItem("searchHistory", JSON.stringify(obj));
+                        $window.localStorage.setItem("stockTasksSearchHistory", JSON.stringify(obj));
                         $scope.searchHistoryContent = obj;
                         break;
                     }
@@ -350,6 +349,7 @@ angular.module('starter.controllers', [])
         };
     })
     .controller('StockReportHistoryCtrl', function ($scope, $http, $window, $ionicTabsDelegate) {
+        //绑定页面数据
         $scope.history = $http(
             {
                 method: "jsonp",
@@ -366,6 +366,106 @@ angular.module('starter.controllers', [])
                     alert("获取任务汇报历史失败");
                 }
             })
+        //列表刷新事件
+        $scope.doRefresh = function () {
+            try {
+                $scope.chats = $http(
+                    {
+                        method: "jsonp",
+                        url: "http://192.168.3.14:8080/edi.stocktask_Web/v1/stockreports?callback=JSON_CALLBACK",
+                        params: {
+                            "token": $window.sessionStorage.token
+                        },
+                        hasCode: false
+                    })
+                    .success(function (newItems) {
+                        if (newItems.code == 0) {
+                            $scope.reports = newItems.data;
+                        } else {
+                            alert("获取任务汇报历史失败");
+                        }
+                    })
+            } catch (err) {
+                alert(err);
+            }
+        };
+        //搜索事件
+        $scope.search = function () {
+            var data = [{ "key": this.searchContent }];
+            //搜索历史为空
+            try {
+                if ($window.localStorage.length == 0) {
+                    $window.localStorage.setItem("StockReportHistorySearchHistory", JSON.stringify(data));
+                    $scope.searchHistoryContent = JSON.parse($window.localStorage.getItem("StockReportHistorySearchHistory"));
+                } else if ($window.localStorage.StockReportHistorySearchHistory != "" && $window.localStorage.StockReportHistorySearchHistory != undefined) {
+                    //搜索历史不为空则插入新元素
+                    var obj = JSON.parse($window.localStorage.getItem("StockReportHistorySearchHistory"));
+                    //限定只存最近8个历史记录，超出则删除相比最早的搜索历史、搜索了之前搜过的放到最新
+                    if (obj.length == 8) {
+                        obj.splice(7, 1);
+                        $window.localStorage.setItem("StockReportHistorySearchHistory", JSON.stringify(obj));
+                    };
+                    //不重复向搜索历史中插入相同数据
+                    for (var i = 0; i < obj.length; i++) {
+                        //搜索内容存在于搜索历史，则将其置于历史记录最新
+                        if (obj[i].key == this.searchContent) {
+                            obj.splice(i, 1);
+                            obj.unshift({ "key": event });
+                            $window.localStorage.setItem("StockReportHistorySearchHistory", JSON.stringify(obj));
+                            break;
+                        }
+                        if (i == obj.length - 1 && obj[i].key != this.searchContent) {
+                            //最新搜索置于最前
+                            obj.unshift({ "key": this.searchContent });
+                            $window.localStorage.setItem("StockReportHistorySearchHistory", JSON.stringify(obj));
+                            $scope.searchHistoryContent = obj;
+                            break;
+                        }
+                    }
+                } else {
+                    $window.localStorage.setItem("StockReportHistorySearchHistory", JSON.stringify(data));
+                    $scope.searchHistoryContent = JSON.parse($window.localStorage.getItem("StockReportHistorySearchHistory"));
+                }
+            } catch (err) {
+                alert(err);
+            }
+        };
+        //绑定页面搜索历史值
+        if ($window.localStorage.getItem("StockReportHistorySearchHistory") != "" && $window.localStorage.StockReportHistorySearchHistory != undefined) {
+            $scope.searchHistoryContent = JSON.parse($window.localStorage.getItem("StockReportHistorySearchHistory"));
+        } else {
+            $scope.searchHistoryContent = "";
+        }
+        //搜索历史框的显示与隐藏在前端实现： ng-focus="isShowSearchHistory='true'" ng-blur="isShowSearchHistory=!isShowSearchHistory"
+        //默认隐藏
+        $scope.isShowSearchHistory = false;
+        //删除搜索框输入内容
+        $scope.delSearchContent = function () {
+            this.searchContent = "";
+        };
+        //删除搜索历史
+        $scope.delSearchHistory = function () {
+            $window.localStorage.StockReportHistorySearchHistory = "";
+            $scope.searchHistoryContent = null;
+        }
+        //点击搜索历史item，对item进行搜索
+        $scope.historyName = function (event) {
+            try {
+                var obj = JSON.parse($window.localStorage.getItem("StockReportHistorySearchHistory"));
+                for (var i = 0; i < obj.length; i++) {
+                    if (obj[i].key == event) {
+                        obj.splice(i, 1);
+                        obj.unshift({ "key": event });
+                        $window.localStorage.setItem("StockReportHistorySearchHistory", JSON.stringify(obj));
+                        $scope.searchHistoryContent = obj;
+                        break;
+                    }
+                }
+            } catch (err) {
+                alert(err);
+            }
+        }
+        //进入该页面时事件
         $scope.$on('$ionicView.beforeEnter', function () {
             //关闭tab选项卡      
             $ionicTabsDelegate.showBar(false);
