@@ -48,7 +48,12 @@ angular.module('starter.controllers', [])
     })
     .controller('PlaylistCtrl', function ($scope, $stateParams) {
     })
-    .controller('HomeCtrl', function ($scope) { })
+    .controller('HomeCtrl', function ($scope, $rootScope) {
+        // 显示tabs
+        $scope.$on('$ionicView.enter', function () {
+            $rootScope.hideTabs = false;
+        })
+    })
     .controller('DashCtrl', function ($scope, $state, $rootScope) {
         $scope.stocktask = function () {
             $state.go('app.tab.chats', {});
@@ -61,7 +66,7 @@ angular.module('starter.controllers', [])
             $rootScope.hideTabs = false;
         })
     })
-    .controller('ChatsCtrl', function ($scope, Chats, $http, $window, $ionicTabsDelegate) {
+    .controller('ChatsCtrl', function ($scope, Chats, $http, $window) {
         //绑定页面数据
         $scope.chats = $http(
             {
@@ -343,10 +348,14 @@ angular.module('starter.controllers', [])
             $scope.modalCheck.show();
         }
     })
-    .controller('AccountCtrl', function ($scope) {
+    .controller('AccountCtrl', function ($scope, $rootScope) {
         $scope.settings = {
             enableFriends: true
         };
+        // 显示tabs
+        $scope.$on('$ionicView.enter', function () {
+            $rootScope.hideTabs = false;
+        })
     })
     .controller('StockReportHistoryCtrl', function ($scope, $http, $window, $ionicTabsDelegate) {
         //绑定页面数据
