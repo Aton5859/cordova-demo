@@ -28,7 +28,6 @@
             //alert(XMLHttpRequest.status);
             //alert(XMLHttpRequest.readyState);
             // window.location.href = "index.html"
-        },
-        
+        }
     })
 }

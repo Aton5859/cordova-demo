@@ -29,7 +29,6 @@ angular.module('starter.controllers', [])
                     window.location.href = "login.html"
                 })
         }
-
         //$scope.doLogin = function () {
         //    console.log('Doing login', $scope.loginData);
         //    $timeout(function () {
@@ -63,7 +62,7 @@ angular.module('starter.controllers', [])
         })
     })
     .controller('ChatsCtrl', function ($scope, Chats, $http, $window, $ionicTabsDelegate) {
-        //库存任务列表数据获取
+        //绑定页面数据
         $scope.chats = $http(
             {
                 method: "jsonp",
@@ -83,96 +82,107 @@ angular.module('starter.controllers', [])
             .finally(function () {
                 $scope.$broadcast('scroll.refreshComplete');
             });
-
         //列表刷新事件
         $scope.doRefresh = function () {
-            $scope.chats = $http(
-                {
-                    method: "jsonp",
-                    url: "http://192.168.3.14:8080/edi.stocktask_Web/v1/stocktasks?callback=JSON_CALLBACK",
-                    params: {
-                        "token": $window.sessionStorage.token
-                    },
-                    hasCode: false
-                })
-                .success(function (newItems) {
-                    if (newItems.code == 0) {
-                        $scope.chats = newItems.data;
-                    } else {
-                        alert("获取任务清单失败");
-                    }
-                })
-                .finally(function () {
-                    $scope.$broadcast('scroll.refreshComplete');
-                })
+            try {
+                $scope.chats = $http(
+                    {
+                        method: "jsonp",
+                        url: "http://192.168.3.14:8080/edi.stocktask_Web/v1/stocktasks?callback=JSON_CALLBACK",
+                        params: {
+                            "token": $window.sessionStorage.token
+                        },
+                        hasCode: false
+                    })
+                    .success(function (newItems) {
+                        if (newItems.code == 0) {
+                            $scope.chats = newItems.data;
+                        } else {
+                            alert("获取任务清单失败");
+                        }
+                    })
+                    .finally(function () {
+                        $scope.$broadcast('scroll.refreshComplete');
+                    })
+            } catch (err) {
+                alert(err);
+            }
         };
-
         //搜索事件
         $scope.search = function () {
             var data = [{ "key": this.searchContent }];
             //搜索历史为空
-            if ($window.localStorage.searchHistory == "" || $window.localStorage.length == 0) {
-                $window.localStorage.setItem("searchHistory", JSON.stringify(data));
-                $scope.searchHistoryContent = JSON.parse($window.localStorage.getItem("searchHistory"));
-            } else {
-                //搜索历史不为空则插入新元素
-                var obj = JSON.parse($window.localStorage.getItem("searchHistory"));
-                //限定只存最近8个历史记录，超出则删除相比最早的搜索历史、搜索了之前搜过的放到最新
-                if (obj.length == 8) {
-                    obj.splice(7, 1);
-                    $window.localStorage.setItem("searchHistory", JSON.stringify(obj));
-                    // obj = JSON.parse($window.localStorage.getItem("searchHistory"));
-                }
-                //不重复向搜索历史中插入相同数据
-                for (let i = 0; i < obj.length; i++) {
-                    //搜索内容存在于搜索历史，则将其置于历史记录最新
-                    if (obj[i].key == this.searchContent) {
-                        obj.splice(i, 1);
-                        obj.unshift({ "key": event });
+            try {
+                if ($window.localStorage.length == 0) {
+                    $window.localStorage.setItem("searchHistory", JSON.stringify(data));
+                    $scope.searchHistoryContent = JSON.parse($window.localStorage.getItem("searchHistory"));
+                } else if ($window.localStorage.searchHistory != "" && $window.localStorage.searchHistory != undefined) {
+                    //搜索历史不为空则插入新元素
+                    var obj = JSON.parse($window.localStorage.getItem("searchHistory"));
+                    //限定只存最近8个历史记录，超出则删除相比最早的搜索历史、搜索了之前搜过的放到最新
+                    if (obj.length == 8) {
+                        obj.splice(7, 1);
                         $window.localStorage.setItem("searchHistory", JSON.stringify(obj));
-                        break;
+                        // obj = JSON.parse($window.localStorage.getItem("searchHistory"));
+                    };
+                    //不重复向搜索历史中插入相同数据
+                    for (var i = 0; i < obj.length; i++) {
+                        //搜索内容存在于搜索历史，则将其置于历史记录最新
+                        if (obj[i].key == this.searchContent) {
+                            obj.splice(i, 1);
+                            obj.unshift({ "key": event });
+                            $window.localStorage.setItem("searchHistory", JSON.stringify(obj));
+                            break;
+                        }
+                        if (i == obj.length - 1 && obj[i].key != this.searchContent) {
+                            //最新搜索置于最前
+                            obj.unshift({ "key": this.searchContent });
+                            $window.localStorage.setItem("searchHistory", JSON.stringify(obj));
+                            $scope.searchHistoryContent = obj;
+                            break;
+                        }
                     }
-                    if (i == obj.length - 1 && obj[i].key != this.searchContent) {
-                        //最新搜索置于最前
-                        obj.unshift({ "key": this.searchContent });
-                        $window.localStorage.setItem("searchHistory", JSON.stringify(obj));
-                        $scope.searchHistoryContent = obj;
-                        break;
-                    }
+                } else {
+                    $window.localStorage.setItem("searchHistory", JSON.stringify(data));
+                    $scope.searchHistoryContent = JSON.parse($window.localStorage.getItem("searchHistory"));
                 }
+            } catch (err) {
+                alert(err);
             }
         };
         //绑定页面搜索历史值
-        if ($window.localStorage.getItem("searchHistory") != "") {
+        if ($window.localStorage.getItem("searchHistory") != "" && $window.localStorage.searchHistory != undefined) {
             $scope.searchHistoryContent = JSON.parse($window.localStorage.getItem("searchHistory"));
+        } else {
+            $scope.searchHistoryContent = "";
         }
-
         //搜索历史框的显示与隐藏在前端实现：ng-focus="searchHistory='true'" ng-blur="searchHistory='false'"
         //默认隐藏
         $scope.isShowSearchHistory = false;
-
         //删除搜索框输入内容
         $scope.delSearchContent = function () {
             this.searchContent = "";
         };
-
         //删除搜索历史
         $scope.delSearchHistory = function () {
             $window.localStorage.searchHistory = "";
             $scope.searchHistoryContent = null;
         }
-
         //点击搜索历史item，对item进行搜索
         $scope.historyName = function (event) {
-            var obj = JSON.parse($window.localStorage.getItem("searchHistory"));
-            for (let i = 0; i < obj.length; i++) {
-                if (obj[i].key == event) {
-                    obj.splice(i, 1);
-                    obj.unshift({ "key": event });
-                    $window.localStorage.setItem("searchHistory", JSON.stringify(obj));
-                    $scope.searchHistoryContent = obj;
-                    break;
+            try {
+                var obj = JSON.parse($window.localStorage.getItem("searchHistory"));
+                for (var i = 0; i < obj.length; i++) {
+                    if (obj[i].key == event) {
+                        obj.splice(i, 1);
+                        obj.unshift({ "key": event });
+                        $window.localStorage.setItem("searchHistory", JSON.stringify(obj));
+                        $scope.searchHistoryContent = obj;
+                        break;
+                    }
                 }
+            } catch (err) {
+                alert(err);
             }
         }
     })
