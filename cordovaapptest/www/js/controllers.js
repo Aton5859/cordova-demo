@@ -56,10 +56,10 @@ angular.module('starter.controllers', [])
     })
     .controller('DashCtrl', function ($scope, $state, $rootScope) {
         $scope.stocktask = function () {
-            $state.go('app.tab.chats', {});
+            $state.go('tab.chats', {});
         }
         $scope.reporthistory = function () {
-            $state.go('app.tab.stockreporthistory', {});
+            $state.go('tab.stockreporthistory', {});
         }
         // 显示tabs
         $scope.$on('$ionicView.enter', function () {
@@ -118,10 +118,7 @@ angular.module('starter.controllers', [])
             var data = [{ "key": this.searchContent }];
             //搜索历史为空
             try {
-                if ($window.localStorage.length == 0) {
-                    $window.localStorage.setItem("stockTasksSearchHistory", JSON.stringify(data));
-                    $scope.searchHistoryContent = JSON.parse($window.localStorage.getItem("stockTasksSearchHistory"));
-                } else if ($window.localStorage.stockTasksSearchHistory != "" && $window.localStorage.stockTasksSearchHistory != undefined) {
+                 if ($window.localStorage.stockTasksSearchHistory != "" && $window.localStorage.stockTasksSearchHistory != undefined) {
                     //搜索历史不为空则插入新元素
                     var obj = JSON.parse($window.localStorage.getItem("stockTasksSearchHistory"));
                     //限定只存最近8个历史记录，超出则删除相比最早的搜索历史、搜索了之前搜过的放到最新
@@ -134,7 +131,7 @@ angular.module('starter.controllers', [])
                         //搜索内容存在于搜索历史，则将其置于历史记录最新
                         if (obj[i].key == this.searchContent) {
                             obj.splice(i, 1);
-                            obj.unshift({ "key": event });
+                            obj.unshift({ "key": this.searchContent });
                             $window.localStorage.setItem("stockTasksSearchHistory", JSON.stringify(obj));
                             break;
                         }
@@ -195,7 +192,7 @@ angular.module('starter.controllers', [])
         $scope.chat = Chats.get($stateParams, $scope);
         //新建库存汇报
         $scope.createStockReport = function () {
-            $state.go('app.tab.stockreport', { stocktask: $stateParams });
+            $state.go('tab.stockreport', { stocktask: $stateParams });
         }
         //进入该页面事件
         $scope.$on('$ionicView.beforeEnter', function () {
@@ -403,10 +400,7 @@ angular.module('starter.controllers', [])
             var data = [{ "key": this.searchContent }];
             //搜索历史为空
             try {
-                if ($window.localStorage.length == 0) {
-                    $window.localStorage.setItem("StockReportHistorySearchHistory", JSON.stringify(data));
-                    $scope.searchHistoryContent = JSON.parse($window.localStorage.getItem("StockReportHistorySearchHistory"));
-                } else if ($window.localStorage.StockReportHistorySearchHistory != "" && $window.localStorage.StockReportHistorySearchHistory != undefined) {
+                if ($window.localStorage.StockReportHistorySearchHistory != "" && $window.localStorage.StockReportHistorySearchHistory != undefined) {
                     //搜索历史不为空则插入新元素
                     var obj = JSON.parse($window.localStorage.getItem("StockReportHistorySearchHistory"));
                     //限定只存最近8个历史记录，超出则删除相比最早的搜索历史、搜索了之前搜过的放到最新
@@ -419,7 +413,7 @@ angular.module('starter.controllers', [])
                         //搜索内容存在于搜索历史，则将其置于历史记录最新
                         if (obj[i].key == this.searchContent) {
                             obj.splice(i, 1);
-                            obj.unshift({ "key": event });
+                            obj.unshift({ "key": this.searchContent });
                             $window.localStorage.setItem("StockReportHistorySearchHistory", JSON.stringify(obj));
                             break;
                         }
@@ -480,7 +474,7 @@ angular.module('starter.controllers', [])
             $ionicTabsDelegate.showBar(false);
         });
     })
-    .controller('StockReportHistoryDetailCtrl', function ($scope, $stateParams, Reports, $http, $ionicTabsDelegate) {
+    .controller('StockReportHistoryDetailCtrl', function ($scope, $stateParams, Reports, $ionicTabsDelegate) {
         // ajax http请求中设置async属性为false，则等待返回结果。
         $scope.report = Reports.get($stateParams, $scope);
         $scope.$on('$ionicView.beforeEnter', function () {
