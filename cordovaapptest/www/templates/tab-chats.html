@@ -1,11 +1,5 @@
 ﻿<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <ion-view view-title="库存任务" hide-tabs>
-    <ion-header-bar class="item-input-inset">
-        <ion-nav-bar class="bar-stable">
-            <ion-nav-back-button>
-            </ion-nav-back-button>
-        </ion-nav-bar>
-    </ion-header-bar>
     <ion-content>
         <ion-header-bar class="item-input-inset">
             <label class="item-input-wrapper">
@@ -27,7 +21,7 @@
         </div>
         <ion-list>
             <!--如需在左侧加图片显示则加上：class="item-remove-animate item-avatar item-icon-right"-->
-            <ion-item ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/dash/{{chat.objectKey}}" class="item item-icon-right">
+            <ion-item ng-repeat="chat in chats" type="item-text-wrap" href="#/app/tab/dash/{{chat.objectKey}}" class="item item-icon-right">
                 <h2>{{chat.annotated}}</h2>
                 <p>{{chat.objectKey}}</p>
                 <!--显示右侧状态（无视左侧几行）-->

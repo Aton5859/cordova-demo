@@ -48,21 +48,65 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
         //配置路由
         $stateProvider
-            .state('tab', {
+            .state('app', {
+                url: '/app',
+                abstract: true,
+                templateUrl: 'templates/menu.html',
+                controller: 'AppCtrl'
+            })
+            .state('app.search', {
+                url: '/search',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/search.html'
+                    }
+                }
+            })
+            .state('app.browse', {
+                url: '/browse',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/browse.html'
+                    }
+                }
+            })
+            .state('app.playlists', {
+                url: '/playlists',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/playlists.html',
+                        controller: 'PlaylistsCtrl'
+                    }
+                }
+            })
+            .state('app.single', {
+                url: '/playlists/:playlistId',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/playlist.html',
+                        controller: 'PlaylistCtrl'
+                    }
+                }
+            })
+            .state('app.tab', {
                 url: '/tab',
                 abstract: true,
-                templateUrl: 'templates/tabs.html',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/tabs.html'
+                    }
+                }
             })
-            .state('tab.home', {
+            .state('app.tab.home', {
                 url: '/home',
                 views: {
                     'tab-home': {
                         templateUrl: 'templates/tab-home.html',
-                        controller: 'AppCtrl'
+                        controller: 'HomeCtrl'
                     }
                 }
             })
-            .state('tab.dash', {
+            .state('app.tab.dash', {
                 url: '/dash',
                 views: {
                     'tab-dash': {
@@ -71,7 +115,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                     }
                 }
             })
-            .state('tab.chats', {
+            .state('app.tab.chats', {
                 url: '/dash',
                 views: {
                     'tab-dash': {
@@ -80,7 +124,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                     }
                 }
             })
-            .state('tab.chat-detail', {
+            .state('app.tab.chat-detail', {
                 url: '/dash/:objectKey',
                 views: {
                     'tab-dash': {
@@ -89,7 +133,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                     }
                 }
             })
-            .state('tab.stockreport', {
+            .state('app.tab.stockreport', {
                 url: '/stockreport',
                 params: { 'stocktask': null },
                 views: {
@@ -99,7 +143,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                     }
                 }
             })
-            .state('tab.account', {
+            .state('app.tab.account', {
                 url: '/account',
                 views: {
                     'tab-account': {
@@ -108,7 +152,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                     }
                 }
             })
-            .state('tab.stockreporthistory', {
+            .state('app.tab.stockreporthistory', {
                 url: '/stockreporthistory',
                 views: {
                     'tab-dash': {
@@ -117,7 +161,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                     }
                 }
             })
-            .state('tab.stockreporthistorydetail', {
+            .state('app.tab.stockreporthistorydetail', {
                 url: '/stockreporthistory/:docEntry',
                 views: {
                     'tab-dash': {
@@ -127,5 +171,5 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                 }
             })
         //tab页的初始页面
-        $urlRouterProvider.otherwise('/tab/home');
+        $urlRouterProvider.otherwise('/app/tab/home');
     });

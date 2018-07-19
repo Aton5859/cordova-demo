@@ -1,11 +1,5 @@
 ﻿<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <ion-view view-title="库存汇报历史" hide-tabs>
-    <ion-header-bar class="item-input-inset">
-        <ion-nav-bar class="bar-stable">
-            <ion-nav-back-button>
-            </ion-nav-back-button>
-        </ion-nav-bar>
-    </ion-header-bar>
     <ion-content>
         <ion-header-bar class="item-input-inset">
             <label class="item-input-wrapper">
@@ -26,7 +20,7 @@
             </p>
         </div>
         <ion-list>
-            <ion-item ng-repeat="report in reports" type="item-text-wrap" href="#/tab/stockreporthistory/{{report.docEntry}}">
+            <ion-item ng-repeat="report in reports" type="item-text-wrap" href="#/app/tab/stockreporthistory/{{report.docEntry}}">
                 <h2>{{report.remarks}}</h2>
                 <p>{{report.docEntry}}</p>
             </ion-item>
