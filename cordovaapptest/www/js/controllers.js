@@ -314,10 +314,8 @@ angular.module('starter.controllers', [])
                     //获取接口返回的数据
                     if (result.code == 0) {
                         alert("保存成功");
-                        alert(a)
                     } else {
                         alert("保存失败，数据不符合格式");
-                        alert(a)
                     }
                 })
                 .error(function (error) {

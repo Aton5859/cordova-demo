@@ -3,18 +3,10 @@
  */
 angular.module('starter.services', [])
     .factory('Chats', function ($http) {
-        //var getTask = {
-        //    method: "jsonp",
-        //    url: "http://192.168.3.14:8080/edi.stocktask_Web/v1/stocktasks?callback=JSON_CALLBACK",
-        //    params: {
-        //        "token": "59af77833ab84e0d8d37df2de08a0dab"
-        //    }
-        //};
         return {
             //remove: function (chat) {
             //    chats.splice(chats.indexOf(chat), 1);
             //},
-
             get: function (objectKey, page) {
                 for (var i = 0; i < page.$$prevSibling.chats.length; i++) {
                     if (page.$$prevSibling.chats[i].objectKey == objectKey.objectKey) {
@@ -25,28 +17,6 @@ angular.module('starter.services', [])
                     }
                 }
             }
-
-            //get: function (objectkey) {
-            //    $http({
-            //        async:false,
-            //        url: "http://192.168.3.14:8080/edi.stocktask_Web/v1/stocktaskitems?callback=JSON_CALLBACK",
-            //        method: "jsonp",
-            //        //token: "59af77833ab84e0d8d37df2de08a0dab",
-            //        //params:array,
-            //        params: {
-            //            "objectKey": objectkey.objectKey,
-            //            "token": "59af77833ab84e0d8d37df2de08a0dab"
-            //        }
-            //    })
-            //        .success(function (result) {
-            //            //获取接口返回的数据
-            //            if (result.code == 0 && result.data.length != 0) {
-            //                return result.data[0];
-            //            } else {
-            //                return null;
-            //            }
-            //        })
-            //}
         };
     })
 
