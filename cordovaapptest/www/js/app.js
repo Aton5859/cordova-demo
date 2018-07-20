@@ -3,7 +3,7 @@
  * 上篇教程中加载了controllers控制器模块
  * 本篇教程加载了services服务模块
  */
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
             // if (cordova.platformId === 'ios' && window.cordova && window.cordova.plugins.Keyboard) {

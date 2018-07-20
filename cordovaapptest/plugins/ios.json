@@ -9,6 +9,10 @@
   "installed_plugins": {
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "io.cordova.myappbd8dc1"
+    },
+    "phonegap-plugin-barcodescanner": {
+      "CAMERA_USAGE_DESCRIPTION": " ",
+      "PACKAGE_NAME": "io.cordova.myappbd8dc1"
     }
   },
   "dependent_plugins": {}

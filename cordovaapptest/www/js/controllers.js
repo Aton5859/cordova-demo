@@ -202,7 +202,7 @@ angular.module('starter.controllers', [])
         //行明细默认不展开
         $scope.isShowLineDetail = false;
     })
-    .controller('StockReportCtrl', function ($scope, $state, $stateParams, $http, $window, $ionicModal) {
+    .controller('StockReportCtrl', function ($scope, $state, $stateParams, $http, $window, $ionicModal, $cordovaBarcodeScanner) {
         $scope.task = $scope.$$prevSibling.chat;
 
         var json = [];
@@ -340,7 +340,14 @@ angular.module('starter.controllers', [])
             $scope.modalEdit.show();
         }
         $scope.scan = function () {
-            $scope.modalCheck.show();
+            $cordovaBarcodeScanner.scan().then(function (imageData) {
+                alert(imageData.text);
+                console.log("Barcode Format -> " + imageData.format);
+                console.log("Cancelled -> " + imageData.cancelled);
+            }, function (error) {
+                console.log("An error happened -> " + error);
+            });
+            //$scope.modalCheck.show();
         }
     })
     .controller('AccountCtrl', function ($scope, $rootScope) {
